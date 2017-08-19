@@ -1,12 +1,9 @@
 #!/usr/bin/python3
 
 import os, os.path
-import time, datetime
-import psycopg2, psycopg2.extras
-from contextlib import contextmanager
+import time
 
-def printt(*args, **kwargs):
-    print(datetime.datetime.now(), *args, **kwargs)
+from sousvide_shared import printt, sousvidedb
 
 def read_temperatures():
     base = "/sys/bus/w1/devices"

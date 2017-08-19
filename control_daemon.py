@@ -1,9 +1,6 @@
 #!/usr/bin/python3
 
-import os, os.path
-import time, datetime
-import psycopg2, psycopg2.extras
-
+import time
 from sousvide_shared import printt, sousvidedb
 
 def get_temperature(db_cur):
