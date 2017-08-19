@@ -1,0 +1,12 @@
+#!/bin/sh
+set -o errexit -o nounset -o pipefail
+set -x
+
+cd /sys/class/gpio
+N=17
+
+test -d gpio$N || echo $N > export
+echo out > gpio$N/direction
+echo 0 > gpio$N/value
+
+chgrp sousvide . gpio$N gpio$N/value
