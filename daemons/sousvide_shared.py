@@ -14,3 +14,4 @@ def sousvidedb():
 
 def printt(*args, **kwargs):
     print(datetime.datetime.now(), *args, **kwargs, file=sys.stderr)
+    sys.stderr.flush()
