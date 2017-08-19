@@ -8,7 +8,7 @@ from contextlib import contextmanager
 def printt(*args, **kwargs):
     print(datetime.datetime.now(), *args, **kwargs)
 
-def read_temperature():
+def read_temperatures():
     base = "/sys/bus/w1/devices"
 
     printt("Starting to read temperatures.")
