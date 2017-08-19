@@ -55,7 +55,7 @@ def artificial_intelligence(order, temperature):
         return Decision(in_response_to_order=in_response_to_order, failed=True, power=0.)
  
     if temperature_reading < target_temperature:
-        power = 0.8
+        power = 0.5
     else:
         power = 0.2
 
