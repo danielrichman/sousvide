@@ -1,0 +1,8 @@
+[Unit]
+Description=Sous-vide temperature control daemon
+
+[Service]
+ExecStart=/usr/local/sousvide/daemons/control_daemon.py
+User=sousvide
+Group=sousvide
+Restart=no
