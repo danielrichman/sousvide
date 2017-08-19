@@ -13,4 +13,4 @@ echo 0 > value
 
 chgrp sousvide . value
 chmod o+rx /sys/devices/platform/soc/*.gpio/gpiochip0
-ln -sf $(readlink -f value) /etc/sousvide-pin
+ln -sf $(readlink -f value) /run/sousvide-pin

@@ -77,6 +77,7 @@ def decide_what_to_do_and_return_power():
 def apply_fire(power):
     period = 10.
     epsilon = 0.00001
+    gpio_value_filename = "/run/sousvide-pin"
 
     on_for = power * period
     off_for = (1. - power) * period
@@ -86,14 +87,14 @@ def apply_fire(power):
 
     if on_for > epsilon:
         printt("Powering on for", on_for)
-        with open("/etc/sousvide-pin", "w") as f:
+        with open(gpio_value_filename, "w") as f:
             f.write("1")
 
     time.sleep(on_for)
 
     if off_for > epsilon:
         printt("Leaving off for", off_for)
-        with open("/etc/sousvide-pin", "w") as f:
+        with open(gpio_value_filename, "w") as f:
             f.write("0")
 
     time.sleep(off_for)
