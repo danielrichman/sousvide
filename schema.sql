@@ -38,6 +38,7 @@ GRANT SELECT ON control_log  TO "www-data";
 GRANT SELECT ON orders       TO "www-data";
 
 GRANT SELECT ON orders       TO "sousvide";
+GRANT SELECT ON temperatures TO "sousvide";
 GRANT INSERT ON temperatures TO "sousvide";
 GRANT INSERT ON control_log  TO "sousvide";
 
