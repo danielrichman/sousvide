@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import sys
 import datetime
 import psycopg2, psycopg2.extras
 from contextlib import contextmanager
@@ -12,4 +13,4 @@ def sousvidedb():
             yield db_cur
 
 def printt(*args, **kwargs):
-    print(datetime.datetime.now(), *args, **kwargs)
+    print(datetime.datetime.now(), *args, **kwargs, file=sys.stderr)
