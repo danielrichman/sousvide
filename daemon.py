@@ -2,13 +2,15 @@
 
 import os, os.path
 import time, datetime
-import psycopg2
+import psycopg2, psycopg2.extras
 
 def printt(*args, **kwargs):
     print(datetime.datetime.now(), *args, **kwargs)
 
 def read_temperature():
     base = "/sys/bus/w1/devices"
+
+    printt("Starting to read temperatures.")
 
     for name in os.listdir(base):
         if name == "w1_bus_master1":
@@ -29,6 +31,10 @@ def read_temperature():
 
                 value = int(value) / 1000.
 
+                if value == 0:
+                    raise Exception("temperature is not allowed to be precisely zero "
+                                    "because a disconnected sensor sometimes shows up as zero")
+
         except Exception as exn:
             printt("Failed to read temperature", exn)
 
@@ -46,7 +52,7 @@ def get_order(db_cur):
     db_cur.execute("""
         SELECT * FROM orders
         WHERE start_time < current_timestamp AND current_timestamp < end_time
-        ORDER BY seqno DESC 
+        ORDER BY order_id DESC 
         LIMIT 1
     """)
 
@@ -70,8 +76,8 @@ def artificial_intelligence(order, temperatures):
         printt("No temperature readings: switching off")
         return Decision(in_response_to_order=in_response_to_order, failed=True, power=0.)
     
-    (sensor_name, sensor_value), _ = temperatures
-    printt("Using temperature sensor", temp_name, "value", temp_value)
+    (sensor_name, sensor_value) = temperatures[0]
+    printt("Using temperature sensor", sensor_name, "value", sensor_value)
 
     if sensor_value < order["target_temperature"]:
         power = 0.8
@@ -87,11 +93,12 @@ def decide_what_to_do_and_return_power():
 
     temperatures = list(read_temperature())
     log_temperatures(temperatures, db_cur)
+    order = get_order(db_cur)
 
     decision = artificial_intelligence(order, temperatures)
 
     db_cur.execute("INSERT INTO control_log (time, in_response_to_order, failed, power) \
-                    VALUES (current_time, %s, %s, %s)"
+                    VALUES (current_timestamp, %s, %s, %s)",
                    (decision.in_response_to_order, decision.failed, decision.power))
 
     db_cur.close()
@@ -103,16 +110,16 @@ def apply_fire(power):
     on_for = power * 10.
     off_for = (1. - power) * 10.
 
-    assert on_for >= 0. && off_for >= 0. ** abs(on_for + off_for - 10.) < 0.001
+    assert on_for >= 0. and off_for >= 0. and abs(on_for + off_for - 10.) < 0.001
 
     printt("Powering on for", on_for)
-    with open("/etc/sousvide-pin") as f:
+    with open("/etc/sousvide-pin", "w") as f:
         f.write("1")
 
     time.sleep(on_for)
 
     printt("Leaving off for", off_for)
-    with open("/etc/sousvide-pin") as f:
+    with open("/etc/sousvide-pin", "w") as f:
         f.write("0")
 
     time.sleep(off_for)
