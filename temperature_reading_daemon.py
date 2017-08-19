@@ -53,7 +53,7 @@ def cycle():
     with sousvidedb() as db_cur:
         log_temperatures(temperatures, db_cur)
 
-    sleep_for = start_time + 2 - time.time()
+    sleep_for = start_time + 1 - time.time()
     printt("Sleeping for", sleep_for)
     time.sleep(max(sleep_for, 0))
 

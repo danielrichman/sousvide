@@ -75,20 +75,26 @@ def decide_what_to_do_and_return_power():
     return decision.power
 
 def apply_fire(power):
-    on_for = power * 10.
-    off_for = (1. - power) * 10.
+    period = 10.
+    epsilon = 0.00001
 
-    assert on_for >= 0. and off_for >= 0. and abs(on_for + off_for - 10.) < 0.001
+    on_for = power * period
+    off_for = (1. - power) * period
 
-    printt("Powering on for", on_for)
-    with open("/etc/sousvide-pin", "w") as f:
-        f.write("1")
+    assert on_for >= 0. and off_for >= 0. \
+            and abs(on_for + off_for - period) < epsilon
+
+    if on_for > epsilon:
+        printt("Powering on for", on_for)
+        with open("/etc/sousvide-pin", "w") as f:
+            f.write("1")
 
     time.sleep(on_for)
 
-    printt("Leaving off for", off_for)
-    with open("/etc/sousvide-pin", "w") as f:
-        f.write("0")
+    if off_for > epsilon:
+        printt("Leaving off for", off_for)
+        with open("/etc/sousvide-pin", "w") as f:
+            f.write("0")
 
     time.sleep(off_for)
 
