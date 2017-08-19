@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import datetime
 import psycopg2, psycopg2.extras
 from contextlib import contextmanager
 
