@@ -3,4 +3,7 @@
 - (echo w1-gpio; echo w1-therm) >> /etc/modules
 - sudo -u postgres psql postgres -c 'create database sousvide'
 - adduser sousvide
+- mkdir /usr/local/sousvide; chown sousvide: /usr/local/sousvide
+- clone to /usr/local/sousvide
+- cp /usr/local/sousvide/crontab /etc/cron.d/sousvide
 
