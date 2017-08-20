@@ -9,8 +9,8 @@ app = Flask(__name__)
 def hello():
     with sousvidedb() as db_cur:
         db_cur.execute("""
-            SELECT control_log.power, control_log.failed, order.name as order_name,
-                   order.start_time, order.end_time, order.target_temperature,
+            SELECT control_log.power, control_log.failed, orders.name as order_name,
+                   orders.start_time, orders.end_time, orders.target_temperature
             FROM control_log
             LEFT JOIN orders ON orders.order_id = control_log.in_response_to_order
             WHERE control_log.time > current_timestamp - interval '1 minute'
