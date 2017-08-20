@@ -3,7 +3,7 @@ Description=Sous-vide flask app
 
 [Service]
 ExecStartPre=/bin/mkdir -p /run/www-data ; /bin/chown www-data: /run/www-data
-ExecStart=/usr/bin/gunicorn3 --bind /run/www-data/sousvide-flask.sock flask_app:app
+ExecStart=/usr/bin/gunicorn3 --bind unix:/run/www-data/sousvide-flask.sock flask_app:app
 WorkingDirectory=/usr/local/sousvide/daemons
 User=www-data
 Group=www-data
