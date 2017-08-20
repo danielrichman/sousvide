@@ -25,3 +25,7 @@ body {
 .traffic-light.inactive {
     opacity: 0.1;
 }
+
+.traffic-light.inactive:hover {
+    opacity: 0.3;
+}
