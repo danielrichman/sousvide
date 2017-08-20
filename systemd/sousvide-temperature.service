@@ -6,3 +6,6 @@ ExecStart=/usr/local/sousvide/daemons/temperature_reading_daemon.py
 User=sousvide
 Group=sousvide
 Restart=no
+
+[Install]
+WantedBy=multi-user.target
