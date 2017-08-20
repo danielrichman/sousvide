@@ -6,3 +6,6 @@ ExecStart=gunicorn3 --bind /run/sousvide-flask.sock flask_app:app
 User=www-data
 Group=www-data
 Restart=no
+
+[Install]
+WantedBy=multi-user.target
