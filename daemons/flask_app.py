@@ -85,7 +85,7 @@ def temperatures():
 
         db_cur.execute("""
             SELECT time, power
-            FROM temperatures
+            FROM control_log
             WHERE time > current_timestamp - interval '5 hours'
         """)
 
