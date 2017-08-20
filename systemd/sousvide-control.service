@@ -1,5 +1,6 @@
 [Unit]
 Description=Sous-vide temperature control daemon
+After=postgresql.service
 
 [Service]
 ExecStart=/usr/local/sousvide/daemons/control_daemon.py

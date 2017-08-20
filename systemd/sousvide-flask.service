@@ -1,5 +1,6 @@
 [Unit]
 Description=Sous-vide flask app
+After=postgresql.service
 
 [Service]
 ExecStartPre=/bin/mkdir -p /run/www-data ; /bin/chown www-data: /run/www-data
