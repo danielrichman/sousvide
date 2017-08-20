@@ -1,0 +1,8 @@
+[Unit]
+Description=Sous-vide flask app
+
+[Service]
+ExecStart=gunicorn3 --bind /run/sousvide-flask.sock flask_app:app
+User=www-data
+Group=www-data
+Restart=no
