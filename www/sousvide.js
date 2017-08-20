@@ -47,6 +47,12 @@ $(get_status_update);
 
 var chart;
 
+function convert_points(series) {
+    return series.map(function (elt) {
+        return { x: new Date(elt[0]), y: elt[1] }
+    });
+}
+
 function create_graph(data) {
     var config = 
         { type: 'line'
@@ -56,13 +62,13 @@ function create_graph(data) {
                   , backgroundColor: "blue"
                   , borderColor: "blue"
                   , fill: false
-                  , data: data.temperatures
+                  , data: convert_series(data.temperatures)
                   }
                 , { label: "POWER"
                   , backgroundColor: "red"
                   , borderColor: "red"
                   , fill: false
-                  , data: data.powers
+                  , data: convert_series(data.powers)
                   }
                 ]
             , options: 
