@@ -44,3 +44,4 @@ function get_status_update() {
 }
 
 $(get_status_update);
+

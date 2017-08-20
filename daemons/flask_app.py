@@ -51,3 +51,44 @@ def hello():
         data[key] = str(data[key])
 
     return jsonify(data)
+
+def decimate(data):
+    last_minute = None
+
+    for idx, value in enumerate(data):
+        this_minute = value["time"].replace(second=0, microsecond=0)
+
+        if idx > len(data) - 60:
+            yield value
+        elif last_minute != this_minute:
+            last_minute = this_minute
+            yield value
+
+@app.route("/time-series")
+def temperatures():
+    temperatures = []
+    powers = []
+
+    with sousvidedb() as db_cur:
+        db_cur.execute("SET TimeZone='Europe/London'")
+
+        db_cur.execute("""
+            SELECT time, reading
+            FROM temperatures
+            WHERE time > current_timestamp - interval '5 hours'
+            ORDER BY time
+        """)
+
+        for row in decimate(db_cur):
+            temperatures.append([str(row["time"]), str(row["reading"])])
+
+        db_cur.execute("""
+            SELECT time, power
+            FROM temperatures
+            WHERE time > current_timestamp - interval '5 hours'
+        """)
+
+        for row in decimate(db_cur):
+            powers.append([str(row["time"]), str(row["power"])])
+
+    return jsonify(temperatures=temperatures, powers=powers)
