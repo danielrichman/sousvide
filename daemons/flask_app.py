@@ -58,7 +58,8 @@ def decimate(data):
     for idx, value in enumerate(data):
         this_minute = value["time"].replace(second=0, microsecond=0)
 
-        if idx > len(data) - 60:
+        # last 60 points at high resolution
+        if idx > data.rowcount - 60:
             yield value
         elif last_minute != this_minute:
             last_minute = this_minute
