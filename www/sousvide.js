@@ -15,7 +15,7 @@ function set_status_elements(data) {
     $("#control-log-power").text(data.control_log_power);
 
     $(".traffic-light").addClass("inactive");
-    if (data.failed) {
+    if (data.control_log_failed) {
         $("#traffic-light-system-failure").removeClass("inactive");
     } else if (data.order_name) {
         $("#traffic-light-cooking").removeClass("inactive");
