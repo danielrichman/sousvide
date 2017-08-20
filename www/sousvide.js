@@ -85,7 +85,7 @@ function create_graph(data) {
             }
         };
 
-    var ctx = $(".chart").getContext("2d");
+    var ctx = $("#chart").getContext("2d");
     chart = new Chart(ctx, config);
 }
 
