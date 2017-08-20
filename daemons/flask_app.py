@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from flask import Flask, jsonify, Response
+from flask import Flask, jsonify
 from sousvide_shared import printt, sousvidedb
 
 app = Flask(__name__)
@@ -65,14 +65,17 @@ def decimate(data):
             last_minute = this_minute
             yield value
 
-def generate_temperatures():
+@app.route("/time-series")
+def temperatures():
     time_condition = """
         WHERE time > current_timestamp - interval '5 hours'
         AND (time > current_timestamp - interval '1 minute'
              OR extract(milliseconds from time)::integer % 60 = 0)
     """
 
-    yield "{"
+    temperatures = []
+    powers = []
+
     with sousvidedb() as db_cur:
         db_cur.execute("SET TimeZone='Europe/London'")
 
@@ -83,10 +86,8 @@ def generate_temperatures():
             ORDER BY time
         """.format(time_condition))
 
-        yield '"temperatures": ['
         for row in decimate(db_cur):
-            yield '["{}", {}],'.format(row["time"], row["reading"])
-        yield "],"
+            temperatures.append((str(row["time"], row["reading"])))
 
         db_cur.execute("""
             SELECT time, power
@@ -94,13 +95,7 @@ def generate_temperatures():
             {}
         """.format(time_condition))
 
-        yield '"powers": ['
         for row in decimate(db_cur):
-            yield '["{}", {}],'.format(row["time"], row["power"])
-        yield "]"
+            powers.append((str(row["time"], row["power"])))
 
-    yield "}"
-
-@app.route("/time-series")
-def temperatures():
-    return Response(generate_temperatures(), mimetype='application/json')
+    return jsonify(temperatures=temperatures, powers=powers)
