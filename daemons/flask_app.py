@@ -65,7 +65,7 @@ def decimate(data):
             last_minute = this_minute
             yield value
 
-def generate_temperatures()
+def generate_temperatures():
     yield "{"
     with sousvidedb() as db_cur:
         db_cur.execute("SET TimeZone='Europe/London'")
