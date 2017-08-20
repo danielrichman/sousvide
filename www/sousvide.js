@@ -40,7 +40,7 @@ function get_status_update() {
     $.ajax({url: "/status", dataType: "json"})
         .done(set_status_elements)
         .fail(set_all_unk)
-        .always(function () { setTimeout(5000, sousvide_status_update) });
+        .always(function () { setTimeout(5000, get_status_update) });
 }
 
 $(get_status_update);
