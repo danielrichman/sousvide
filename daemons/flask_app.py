@@ -90,7 +90,7 @@ def generate_temperatures():
 
         yield '"powers": ['
         for row in decimate(db_cur):
-            yield "['{}', {}],".format(row["time"], row["power"])
+            yield '["{}", {}],'.format(row["time"], row["power"])
         yield "]"
 
     yield "}"
