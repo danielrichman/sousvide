@@ -29,3 +29,7 @@ body {
 .traffic-light.inactive:hover {
     opacity: 0.3;
 }
+
+#chart {
+    height: 61vw;
+}

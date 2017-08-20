@@ -81,7 +81,7 @@ def temperatures():
         """)
 
         for row in decimate(db_cur):
-            temperatures.append([str(row["time"]), str(row["reading"])])
+            temperatures.append({"x": str(row["time"]), "y": row["reading"]})
 
         db_cur.execute("""
             SELECT time, power
@@ -90,6 +90,6 @@ def temperatures():
         """)
 
         for row in decimate(db_cur):
-            powers.append([str(row["time"]), str(row["power"])])
+            powers.append({"x": str(row["time"]), "y": row["power"]})
 
     return jsonify(temperatures=temperatures, powers=powers)

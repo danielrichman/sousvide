@@ -45,3 +45,53 @@ function get_status_update() {
 
 $(get_status_update);
 
+var chart;
+
+function create_graph(data) {
+    var config = 
+        { type: 'line'
+        , data: 
+            { datasets:
+                [ { label: "Temperature"
+                  , backgroundColor: "blue"
+                  , borderColor: "blue"
+                  , fill: false
+                  , data: data.temperatures
+                  }
+                , { label: "POWER"
+                  , backgroundColor: "red"
+                  , borderColor: "red"
+                  , fill: false
+                  , data: data.powers
+                  }
+                ]
+            , options: 
+                { responsive: true
+                , title: { display: false, text: "Sous Vide" }
+                }
+            , scales: 
+                { xAxes: 
+                    [ { type: "time"
+                      , display: true
+                      , scaleLabel: { display: true, labelString: 'Date' }
+                      }
+                    ]
+                , yAxes: 
+                    [ { display: true
+                      , scaleLabel: { display: true, labelString: 'value' }
+                      }
+                    ]
+                }
+            }
+        };
+
+    var ctx = $(".chart").getContext("2d");
+    chart = new Chart(ctx, config);
+}
+
+function get_time_series() {
+    $.ajax({url: "/status", dataType: "json"})
+        .done(create_graph)
+}
+
+$(get_time_series);
