@@ -77,9 +77,9 @@ def generate_temperatures():
             ORDER BY time
         """)
 
-        yield "temperatures: ["
+        yield '"temperatures": ['
         for row in decimate(db_cur):
-            yield "['{}', {}],".format(row["time"], row["reading"])
+            yield '["{}", {}],'.format(row["time"], row["reading"])
         yield "],"
 
         db_cur.execute("""
@@ -88,7 +88,7 @@ def generate_temperatures():
             WHERE time > current_timestamp - interval '5 hours'
         """)
 
-        yield "powers: ["
+        yield '"powers": ['
         for row in decimate(db_cur):
             yield "['{}', {}],".format(row["time"], row["power"])
         yield "]"
