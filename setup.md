@@ -7,3 +7,6 @@
 - clone to /usr/local/sousvide
 - cp /usr/local/sousvide/crontab /etc/cron.d/sousvide
 - cp /usr/local/sousvide/nginx.conf /etc/nginx/nginx.conf
+- cp systemd/*.service /etc/systemd/system
+- systemctl enable sousvide-temperature sousvide-flask
+- systemctl start sousvide-control # manual
