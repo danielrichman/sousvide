@@ -97,4 +97,4 @@ def generate_temperatures():
 
 @app.route("/time-series")
 def temperatures():
-    return Response(generate_temperatures(), mimetype='text/json')
+    return Response(generate_temperatures(), mimetype='application/json')
