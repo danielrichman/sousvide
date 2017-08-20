@@ -24,5 +24,7 @@ def hello():
     if data is None:
         return jsonify({"error": "state unknown"}), 400
     else:
-        data["end_time"] = str(data["end_time"])
+        for key in ("start_time", "end_time"):
+            data[key] = str(data[key])
         return jsonify(dict(data))
+
