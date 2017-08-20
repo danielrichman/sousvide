@@ -38,6 +38,8 @@ def hello():
     if data is None:
         return jsonify({"error": "state unknown"}), 400
 
+    data = dict(data)
+
     if data2 is None:
         data["current_temperature"] = None
     else:
@@ -48,4 +50,4 @@ def hello():
     for key in ("start_time", "end_time"):
         data[key] = str(data[key])
 
-    return jsonify(dict(data))
+    return jsonify(data)
