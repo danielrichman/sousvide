@@ -23,4 +23,4 @@ def hello():
     if data is None:
         return jsonify({"error": "state unknown"}), 400
     else:
-        return jsonify(data)
+        return jsonify(dict(data))
