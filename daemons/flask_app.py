@@ -8,6 +8,7 @@ app = Flask(__name__)
 @app.route("/status")
 def hello():
     with sousvidedb() as db_cur:
+        db_cur.execute("SET TimeZone='Europe/London'")
         db_cur.execute("""
             SELECT control_log.power, control_log.failed, orders.name as order_name,
                    orders.start_time, orders.end_time, orders.target_temperature
@@ -23,4 +24,5 @@ def hello():
     if data is None:
         return jsonify({"error": "state unknown"}), 400
     else:
+        data["end_time"] = str(data["end_time"])
         return jsonify(dict(data))
