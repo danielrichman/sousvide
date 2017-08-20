@@ -66,6 +66,12 @@ def decimate(data):
             yield value
 
 def generate_temperatures():
+    time_condition = """
+        WHERE time > current_timestamp - interval '5 hours'
+        AND (time > current_timestamp - interval '1 minute'
+             OR extract(milliseconds from time) % 60 = 0)
+    """
+
     yield "{"
     with sousvidedb() as db_cur:
         db_cur.execute("SET TimeZone='Europe/London'")
@@ -73,9 +79,9 @@ def generate_temperatures():
         db_cur.execute("""
             SELECT time, reading
             FROM temperatures
-            WHERE time > current_timestamp - interval '5 hours'
+            {}
             ORDER BY time
-        """)
+        """.format(time_condition))
 
         yield '"temperatures": ['
         for row in decimate(db_cur):
@@ -85,8 +91,8 @@ def generate_temperatures():
         db_cur.execute("""
             SELECT time, power
             FROM control_log
-            WHERE time > current_timestamp - interval '5 hours'
-        """)
+            {}
+        """.format(time_condition))
 
         yield '"powers": ['
         for row in decimate(db_cur):
