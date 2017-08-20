@@ -64,12 +64,12 @@ function create_graph(data) {
                   , fill: false
                   , data: convert_series(data.temperatures)
                   }
-                , { label: "POWER"
+ /*               , { label: "POWER"
                   , backgroundColor: "red"
                   , borderColor: "red"
                   , fill: false
                   , data: convert_series(data.powers)
-                  }
+                  } */
                 ]
             , options: 
                 { responsive: true
