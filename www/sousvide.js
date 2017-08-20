@@ -47,7 +47,7 @@ $(get_status_update);
 
 var chart;
 
-function convert_points(series) {
+function convert_series(series) {
     return series.map(function (elt) {
         return { x: new Date(elt[0]), y: elt[1] }
     });
