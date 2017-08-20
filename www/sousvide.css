@@ -1,0 +1,22 @@
+#traffic-lights {
+    margin: 0.5em 0;
+}
+
+.traffic-light {
+    border-radius: 0.3em;
+    padding: 0.1em 1em;
+    margin: 0.1em;
+    text-transform: uppercase;
+    font-size: 2.5em;
+    font-weight: bold;
+    text-align: center;
+    font-family: monospace;
+}
+
+.traffic-light.red    { background: #f00; }
+.traffic-light.yellow { background: #fe0; }
+.traffic-light.green  { background: #5a3; }
+
+.traffic-light.inactive {
+    opacity: 0.1;
+}

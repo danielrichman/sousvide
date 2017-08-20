@@ -5,16 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="sousvide.css">
   </head>
   <body>
 
 <div class="container">
   <div class="row">
-    <div class="col-md">
-      <p>Status.</p>
+    <div class="col-md" id="traffic-lights">
+      <div class="traffic-light inactive red">System failure.</div>
+      <div class="traffic-light inactive yellow">Sleeping.</div>
+      <div class="traffic-light inactive green">Cooking.</div>
     </div>
     <div class="col-md">
-      <p>Config.</p>
+      <table class="table table-striped table-bordered table-hover table-sm">
+        <tbody>
+          <tr>
+            <td>Name</td>
+            <td id="order-name">unk</td>
+          </tr>
+          <tr>
+            <td>Start time</td>
+            <td id="order-start-time">unk</td>
+          </tr>
+          <tr>
+            <td>End time</td>
+            <td id="order-end-time">unk</td>
+          </tr>
+          <tr>
+            <td>Target temperature</td>
+            <td id="order-target-temperature">unk</td>
+          </tr>
+          <tr>
+            <td>Latest reading</td>
+            <td id="temperatures-reading">unk</td>
+          </tr>
+          <tr>
+            <td>Current power</td>
+            <td id="control-log-power">unk</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
   <div class="row">
