@@ -69,7 +69,7 @@ def generate_temperatures():
     time_condition = """
         WHERE time > current_timestamp - interval '5 hours'
         AND (time > current_timestamp - interval '1 minute'
-             OR extract(milliseconds from time) % 60 = 0)
+             OR extract(milliseconds from time)::integer % 60 = 0)
     """
 
     yield "{"
