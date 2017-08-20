@@ -65,11 +65,8 @@ def decimate(data):
             last_minute = this_minute
             yield value
 
-@app.route("/time-series")
-def temperatures():
-    temperatures = []
-    powers = []
-
+def generate_temperatures()
+    yield "{"
     with sousvidedb() as db_cur:
         db_cur.execute("SET TimeZone='Europe/London'")
 
@@ -80,8 +77,10 @@ def temperatures():
             ORDER BY time
         """)
 
+        yield "temperatures: ["
         for row in decimate(db_cur):
-            temperatures.append((str(row["time"]), row["reading"]))
+            yield "['{}', {}],".format(row["time"], row["reading"])
+        yield "],"
 
         db_cur.execute("""
             SELECT time, power
@@ -89,7 +88,13 @@ def temperatures():
             WHERE time > current_timestamp - interval '5 hours'
         """)
 
+        yield "powers: ["
         for row in decimate(db_cur):
-            powers.append((str(row["time"]), row["power"]))
+            yield "['{}', {}],".format(row["time"], row["power"])
+        yield "]"
 
-    return jsonify(temperatures=temperatures, powers=powers)
+    yield "}"
+
+@app.route("/time-series")
+def temperatures():
+    return Response(generate_temperatures(), mimetype='text/json')
