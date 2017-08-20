@@ -90,7 +90,7 @@ function create_graph(data) {
 }
 
 function get_time_series() {
-    $.ajax({url: "/status", dataType: "json"})
+    $.ajax({url: "/time-series", dataType: "json"})
         .done(create_graph)
 }
 
